@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Cloud, Droplets, TrendingUp } from "lucide-react";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface RainfallData {
   annualRainfall: number;
@@ -114,23 +115,50 @@ export const RainfallDisplay = ({ data, isLoading }: RainfallDisplayProps) => {
           </Badge>
         </div>
 
-        {/* Monthly Distribution */}
+        {/* Monthly Distribution Chart */}
         <div>
           <h4 className="font-medium mb-3">Monthly Distribution (mm)</h4>
-          <div className="grid grid-cols-6 gap-2">
-            {data.monthlyRainfall.map((rainfall, index) => (
-              <div key={months[index]} className="text-center">
-                <div 
-                  className="bg-gradient-accent rounded-t mb-1 transition-smooth hover:opacity-80" 
-                  style={{ 
-                    height: `${Math.max(4, (rainfall / Math.max(...data.monthlyRainfall)) * 60)}px`,
-                    minHeight: '4px'
-                  }}
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={data.monthlyRainfall.map((rainfall, index) => ({
+                month: months[index],
+                rainfall,
+                trend: index > 0 ? rainfall - data.monthlyRainfall[index - 1] : 0
+              }))}>
+                <defs>
+                  <linearGradient id="rainfallGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.3} />
+                <XAxis 
+                  dataKey="month" 
+                  stroke="hsl(var(--muted-foreground))"
+                  fontSize={12}
                 />
-                <div className="text-xs text-muted-foreground">{months[index]}</div>
-                <div className="text-xs font-medium">{rainfall}</div>
-              </div>
-            ))}
+                <YAxis 
+                  stroke="hsl(var(--muted-foreground))"
+                  fontSize={12}
+                />
+                <Tooltip 
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    color: 'hsl(var(--card-foreground))'
+                  }}
+                  formatter={(value: number) => [`${value}mm`, 'Rainfall']}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="rainfall"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={2}
+                  fill="url(#rainfallGradient)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
