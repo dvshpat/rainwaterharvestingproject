@@ -127,7 +127,12 @@ export const calculateHarvestingResults = (
   propertyData: any,
   rainfallData: any,
   hydroData: any
-) => {
+): any => {
+  // Store property data in results for PDF generation
+  const results: any = {
+    propertyData, // Include original property data
+  };
+
   // Runoff coefficients by roof type
   const runoffCoefficients = {
     concrete: 0.85,
@@ -191,43 +196,54 @@ export const calculateHarvestingResults = (
   const length = Math.ceil(Math.sqrt(area));
   const width = Math.ceil(area / length);
 
-  return {
-    feasibility: {
-      status: feasibilityStatus as 'excellent' | 'good' | 'fair' | 'poor',
-      score: feasibilityScore,
-      reasons: [
-        `Annual rainfall: ${rainfallData.annualRainfall}mm`,
-        `Roof area: ${propertyData.roofArea} sq meters`,
-        `Hydrogeology suitability: ${hydroData.suitability.rainwaterHarvesting}`,
-        `Estimated collection efficiency: ${Math.round(coefficient * 100)}%`,
-      ],
-    },
-    potential: {
-      annualHarvest,
-      monthlyAverage: Math.round(annualHarvest / 12),
-      dailyAverage: Math.round(annualHarvest / 365),
-      efficiency: Math.round(coefficient * 100),
-    },
-    recommendation: {
-      primaryStructure,
-      secondaryStructures: ['First Flush Diverter', 'Filter System', 'Distribution Network'],
-      dimensions: {
-        length,
-        width,
-        depth,
-        capacity: volume,
-      },
-    },
-    economics: {
-      totalCost,
-      annualSavings,
-      paybackPeriod: Math.round(paybackPeriod * 10) / 10,
-      roi: Math.round((annualSavings / totalCost) * 100),
-    },
-    environmental: {
-      carbonReduction: Math.round(annualHarvest * 0.0005), // 0.5g CO2 per liter
-      groundwaterRecharge: Math.round(annualHarvest * 0.8), // 80% goes to groundwater
-      floodReduction: Math.min(Math.round((propertyData.roofArea / propertyData.landArea) * 30), 45),
-    },
+  results.feasibility = {
+    status: feasibilityStatus as 'excellent' | 'good' | 'fair' | 'poor',
+    score: feasibilityScore,
+    reason: `Based on ${rainfallData.annualRainfall}mm annual rainfall, ${propertyData.roofArea}m² roof area, and ${hydroData.suitability.rainwaterHarvesting.toLowerCase()} hydrogeology conditions.`,
+    reasons: [
+      `Annual rainfall: ${rainfallData.annualRainfall}mm`,
+      `Roof area: ${propertyData.roofArea} sq meters`,
+      `Hydrogeology suitability: ${hydroData.suitability.rainwaterHarvesting}`,
+      `Estimated collection efficiency: ${Math.round(coefficient * 100)}%`,
+    ],
   };
+    
+  results.potential = {
+    annualHarvest,
+    monthlyAverage: Math.round(annualHarvest / 12),
+    peakMonthHarvest: Math.max(...rainfallData.monthlyRainfall.map((rain: number) => 
+      Math.round((rain / 1000) * propertyData.roofArea * coefficient * 1000)
+    )),
+    dailyAverage: Math.round(annualHarvest / 365),
+    efficiency: Math.round(coefficient * 100),
+  };
+    
+  results.structure = {
+    type: primaryStructure,
+    capacity: volume,
+    dimensions: {
+      length,
+      width,
+      depth,
+    },
+    materials: ['Concrete', 'PVC Pipes', 'Filter Media', 'Mesh Screen'],
+    secondaryStructures: ['First Flush Diverter', 'Filter System', 'Distribution Network'],
+  };
+    
+  results.economics = {
+    totalCost,
+    costPerLiter: Math.round((totalCost / annualHarvest) * 100) / 100,
+    annualSavings,
+    paybackPeriod: Math.round(paybackPeriod * 10) / 10,
+    roi: Math.round((annualSavings / totalCost) * 100),
+  };
+    
+  results.environmental = {
+    co2Reduction: Math.round(annualHarvest * 0.0005), // 0.5g CO2 per liter
+    groundwaterRecharge: Math.round(annualHarvest * 0.8), // 80% goes to groundwater
+    sustainabilityScore: Math.min(Math.round(feasibilityScore * 0.8 + 20), 95),
+    floodReduction: Math.min(Math.round((propertyData.roofArea / propertyData.landArea) * 30), 45),
+  };
+    
+  return results;
 };

@@ -7,6 +7,8 @@ import { RainfallDisplay } from "@/components/RainfallDisplay";
 import { HydrogeologyInfo } from "@/components/HydrogeologyInfo";
 import { ResultsDashboard } from "@/components/ResultsDashboard";
 import { generateRainfallData, generateHydrogeologyData, calculateHarvestingResults } from "@/services/mockData";
+import { generatePDFReport } from "@/services/pdfGenerator";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import heroImage from "@/assets/hero-image.jpg";
 import { MapPin, Droplets, Calculator, FileText } from "lucide-react";
 
@@ -97,15 +99,56 @@ const Index = () => {
     }
   };
 
-  const handleDownloadReport = () => {
-    toast({
-      title: "Report Generation",
-      description: "PDF report download will be available in the full version",
-    });
+  const handleDownloadReport = async () => {
+    if (!selectedLocation || !results) {
+      toast({
+        title: "Cannot Generate Report",
+        description: "Please complete the analysis before downloading the report",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      toast({
+        title: "Generating Report",
+        description: "Creating your detailed PDF report...",
+      });
+
+      // Get the latest property data from results or form
+      const reportData = {
+        location: selectedLocation,
+        property: {
+          name: results.propertyData?.name || "Property Owner",
+          dwellers: results.propertyData?.dwellers || 4,
+          roofArea: results.propertyData?.roofArea || 100,
+          roofType: results.propertyData?.roofType || "concrete",
+          soilType: results.propertyData?.soilType || "loamy",
+          monthlyWaterConsumption: results.propertyData?.monthlyWaterConsumption || 15000,
+          budget: results.propertyData?.budget || 50000,
+        },
+        results
+      };
+
+      await generatePDFReport(reportData);
+      
+      toast({
+        title: "Report Generated Successfully",
+        description: "Your detailed analysis report has been downloaded",
+      });
+    } catch (error) {
+      console.error("Error generating report:", error);
+      toast({
+        title: "Report Generation Failed",
+        description: "There was an error creating your report. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background transition-colors duration-300">
+      <ThemeToggle />
       {/* Hero Section */}
       <div className="relative h-96 flex items-center justify-center overflow-hidden">
         <div 

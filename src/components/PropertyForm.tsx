@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Home, Users, Calculator } from "lucide-react";
+import { Home, Users, Calculator, Droplets, IndianRupee } from "lucide-react";
 
 export interface PropertyData {
   name: string;
@@ -15,6 +15,8 @@ export interface PropertyData {
   soilType: string;
   landArea: number;
   buildingType: string;
+  monthlyWaterConsumption: number;
+  budget: number;
   additionalInfo: string;
 }
 
@@ -32,6 +34,8 @@ export const PropertyForm = ({ onSubmit, isSubmitting = false }: PropertyFormPro
     soilType: "loamy",
     landArea: 200,
     buildingType: "residential",
+    monthlyWaterConsumption: 15000,
+    budget: 50000,
     additionalInfo: "",
   });
 
@@ -173,6 +177,45 @@ export const PropertyForm = ({ onSubmit, isSubmitting = false }: PropertyFormPro
                   <SelectItem value="mixed">Mixed Soil</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+          </div>
+
+          {/* Consumption & Budget */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="waterConsumption">Monthly Water Consumption (Liters)</Label>
+              <div className="relative">
+                <Droplets className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="waterConsumption"
+                  type="number"
+                  min="1000"
+                  placeholder="15000"
+                  value={formData.monthlyWaterConsumption}
+                  onChange={(e) => updateField("monthlyWaterConsumption", parseFloat(e.target.value) || 0)}
+                  className="pl-10"
+                  required
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">Average household: 10,000-20,000L/month</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="budget">Available Budget (₹)</Label>
+              <div className="relative">
+                <IndianRupee className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="budget"
+                  type="number"
+                  min="10000"
+                  placeholder="50000"
+                  value={formData.budget}
+                  onChange={(e) => updateField("budget", parseFloat(e.target.value) || 0)}
+                  className="pl-10"
+                  required
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">Basic systems start from ₹25,000</p>
             </div>
           </div>
 
