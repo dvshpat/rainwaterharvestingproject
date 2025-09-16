@@ -218,6 +218,17 @@ export const calculateHarvestingResults = (
     efficiency: Math.round(coefficient * 100),
   };
     
+  results.recommendation = {
+    primaryStructure,
+    secondaryStructures: ['First Flush Diverter', 'Filter System', 'Distribution Network'],
+    dimensions: {
+      length,
+      width,
+      depth,
+      capacity: volume,
+    },
+  };
+    
   results.structure = {
     type: primaryStructure,
     capacity: volume,
@@ -227,7 +238,6 @@ export const calculateHarvestingResults = (
       depth,
     },
     materials: ['Concrete', 'PVC Pipes', 'Filter Media', 'Mesh Screen'],
-    secondaryStructures: ['First Flush Diverter', 'Filter System', 'Distribution Network'],
   };
     
   results.economics = {
