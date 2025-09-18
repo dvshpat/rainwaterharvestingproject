@@ -1,56 +1,6 @@
-# Welcome to your Lovable project
+# EcoCatch Water solutions
 
 ## Project info
-
-**URL**: https://lovable.dev/projects/4e648f8e-c70d-476f-89c2-0e3272902794
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/4e648f8e-c70d-476f-89c2-0e3272902794) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
 
 This project is built with:
 
@@ -60,14 +10,63 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+*Frontend Frameworks & Libraries*
 
-Simply open [Lovable](https://lovable.dev/projects/4e648f8e-c70d-476f-89c2-0e3272902794) and click on Share -> Publish.
+Core Framework
+- *React 18.3.1* - Main UI library
+- *TypeScript* - Type safety and development experience
+- *Vite* - Build tool and development server
 
-## Can I connect a custom domain to my Lovable project?
+UI & Styling
+- *Tailwind CSS* - Utility-first CSS framework
+- *shadcn/ui* - Pre-built accessible components
+- *Radix UI* - Headless UI primitives (30+ components)
+- *Lucide React* - Icon library
+- *class-variance-authority* - Component variant management
+- *clsx + tailwind-merge* - Conditional styling
 
-Yes, you can!
+State Management & Data
+- *TanStack React Query* - Server state management
+- *React Hook Form* - Form handling
+- *Zod* - Schema validation
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Routing & Navigation
+- *React Router DOM* - Client-side routing
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Charts & Visualization
+- *Recharts* - Chart library for data visualization
+
+PDF & Export
+- *jsPDF* - PDF generation
+- *html2canvas* - Screenshot/image capture
+
+*Backend*
+- *None currently* - Pure frontend application
+- Uses mock data simulation instead of real backend
+
+*Development Tools*
+- *ESLint* - Code linting
+- *PostCSS* - CSS processing
+- *Lovable Tagger* - Component development tool
+
+*Data Sources (Current Implementation)*
+
+Rainfall Data
+- *Source*: Hardcoded mock data for ~10 Indian cities
+- *Coverage*: Mumbai, Delhi, Bangalore, Chennai, Kolkata, Hyderabad, Pune, Ahmedabad, Jaipur, Lucknow
+- *Data*: Monthly rainfall patterns, annual totals
+
+Hydrogeology Data
+- *Source*: Algorithmic simulation based on geographic patterns
+- *Includes*: Aquifer types, depth estimation, permeability, water quality
+
+Cost & Standards
+- *Source*: Hardcoded estimates
+- *Based on*: General Indian construction costs and CPHEEO guidelines
+
+*Planned Data Integration* (Not Yet Implemented)
+- *IMD (India Meteorological Department)* - Rainfall data
+- *CGWB (Central Ground Water Board)* - Groundwater and aquifer maps
+- *CPHEEO Standards* - Runoff coefficients and design parameters
+
+
