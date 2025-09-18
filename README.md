@@ -47,7 +47,6 @@ PDF & Export
 *Development Tools*
 - *ESLint* - Code linting
 - *PostCSS* - CSS processing
-- *Lovable Tagger* - Component development tool
 
 *Data Sources (Current Implementation)*
 
