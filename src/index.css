@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Rainwater Harvesting App Design System - Water & Environment Theme */
+
+@layer base {
+  :root {
+    /* Base colors - Clean water blues and earth tones */
+    --background: 210 25% 98%;
+    --foreground: 215 25% 15%;
+
+    /* Card system */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Primary - Deep water blue */
+    --primary: 205 85% 35%;
+    --primary-foreground: 210 25% 98%;
+
+    /* Secondary - Earth tone */
+    --secondary: 45 25% 85%;
+    --secondary-foreground: 215 25% 15%;
+
+    /* Muted tones */
+    --muted: 210 15% 92%;
+    --muted-foreground: 215 15% 45%;
+
+    /* Accent - Fresh water blue */
+    --accent: 195 85% 55%;
+    --accent-foreground: 210 25% 98%;
+
+    /* Success - Growth green */
+    --success: 140 65% 45%;
+    --success-foreground: 210 25% 98%;
+
+    /* Warning - Earth orange */
+    --warning: 35 85% 55%;
+    --warning-foreground: 210 25% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 25% 98%;
+
+    --border: 210 20% 88%;
+    --input: 210 20% 95%;
+    --ring: 205 85% 35%;
+
+    --radius: 0.75rem;
+
+    /* Water gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(205 85% 35%), hsl(195 85% 45%));
+    --gradient-accent: linear-gradient(135deg, hsl(195 85% 55%), hsl(180 75% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(205 85% 25%), hsl(195 85% 35%));
+
+    /* Environmental shadows */
+    --shadow-card: 0 4px 20px -4px hsl(205 85% 35% / 0.1);
+    --shadow-form: 0 8px 32px -8px hsl(205 85% 35% / 0.15);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    /* Dark mode - Deep ocean theme */
+    --background: 215 30% 8%;
+    --foreground: 210 25% 95%;
+
+    --card: 215 25% 12%;
+    --card-foreground: 210 25% 95%;
+
+    --primary: 195 85% 65%;
+    --primary-foreground: 215 30% 8%;
+
+    --secondary: 215 20% 20%;
+    --secondary-foreground: 210 25% 95%;
+
+    --muted: 215 20% 15%;
+    --muted-foreground: 215 15% 65%;
+
+    --accent: 195 85% 55%;
+    --accent-foreground: 215 30% 8%;
+
+    --success: 140 65% 55%;
+    --success-foreground: 215 30% 8%;
+
+    --warning: 35 85% 65%;
+    --warning-foreground: 215 30% 8%;
+
+    --destructive: 0 75% 65%;
+    --destructive-foreground: 215 30% 8%;
+
+    --border: 215 20% 25%;
+    --input: 215 20% 18%;
+    --ring: 195 85% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .shadow-form {
+    box-shadow: var(--shadow-form);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+}
